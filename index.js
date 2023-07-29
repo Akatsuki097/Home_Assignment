@@ -1,4 +1,98 @@
 
+document.addEventListener("DOMContentLoaded", htmlOnLoad);
+
+function htmlOnLoad(){
+  document.getElementById("app").innerHTML = `
+  <div class="flex  flex-wrap    ">
+    <div class="w-full md:w-1/2 px-4">
+    <fieldset class="h-full border-2 border-gray-300 border-dashed rounded-lg p-4  ">
+      <legend class=" w-full bg-white rounded-lg shadow-lg p-4 border">
+        <h2 class="text-xl font-semibold mb-2 flex justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+               class="w-6 h-6 mr-2 inline-block mt-1">
+            <path fill-rule="evenodd"
+                  d="M10.362 1.093a.75.75 0 00-.724 0L2.523 5.018 10 9.143l7.477-4.125-7.115-3.925zM18 6.443l-7.25 4v8.25l6.862-3.786A.75.75 0 0018 14.25V6.443zm-8.75 12.25v-8.25l-7.25-4v7.807a.75.75 0 00.388.657l6.862 3.786z"
+                  clip-rule="evenodd"/>
+          </svg>
+          Components
+        </h2>
+      </legend>
+
+      <div class="bg-white rounded-lg shadow-lg p-4" id="components-container">
+        <div class="container mx-auto p-4">
+          <h2 class="text-2xl font-semibold mb-2 flex justify-center">Items</h2>
+          <div class="flex flex-wrap -mx-4" id="item-container">
+            <!-- Yellow Box -->
+            <div class="w-full md:w-1/3 px-4 mb-4 clickable-item" data-color="yellow" data-title="Heading">
+              <div class="bg-yellow-300 rounded-lg shadow-lg p-4 flex justify-center">
+                <h3 class="text-lg font-semibold mb-2 text-yellow-600 cursor-pointer">Heading</h3>
+              </div>
+            </div>
+
+            <!-- Green Box -->
+            <div class="w-full md:w-1/3 px-4 mb-4 clickable-item" data-color="green" data-title="Image">
+              <div class="bg-green-300 rounded-lg shadow-lg p-4 flex justify-center">
+                <h3 class="text-lg font-semibold mb-2 text-green-600 cursor-pointer">Image</h3>
+              </div>
+            </div>
+
+    
+            
+
+            <!-- Sky Blue Box -->
+            <div class="w-full md:w-1/3 px-4 mb-4 clickable-item" data-color="blue" data-title="Description">
+              <div class="bg-blue-300 rounded-lg shadow-lg p-4 flex justify-center">
+                <h3 class="text-lg font-semibold mb-2 text-blue-600 cursor-pointer">Description</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Boxes Container -->
+      <div class="mt-4" id="input-boxes-container"></div>
+
+    </fieldset>
+  </div>
+
+    <!-- Right Part: Preview of the Component -->
+    <div class="w-full md:w-1/2 px-4">
+    <fieldset class="h-full  border-2 border-gray-300 border-dashed rounded-lg p-4  ">
+      <legend class="w-full bg-white rounded-lg shadow-lg p-4 border">
+        <h2 class="text-xl font-semibold mb-2 flex justify-center ">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+               stroke="currentColor" class="w-6 h-6 mr-2 inline-block mt-1">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9zm3.75 11.625a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/>
+          </svg>Preview</h2>
+        </legend>
+        
+          <div class="bg-white rounded-lg shadow-lg relative p-2" id="preview-container">
+            
+                <br>
+                <div class=" pl-4 text-5xl font-semibold mb-2 "  id="headingPreview" > </div>
+
+                <br>
+                <div id="imagePreview"></div>
+                <br>
+                <div class="h-40">
+                  <textarea class="pl-2 text w-full  p-2 font-semibold mb-2 resize-none overflow-hidden h-full"  id="descriptionPreview"></textarea>
+                               
+                </div>
+                <br>
+
+                
+        </div>
+        <button id="link" class="mt-4  text-black  rounded-lg " onclick="downloadAsImage()"> Download </button>
+        
+      
+    </fieldset>
+  </div>
+  </div>
+
+
+  `;
+
   const clickableItems = document.querySelectorAll(".clickable-item");
   const inputBoxesContainer = document.getElementById("input-boxes-container");
   const componentsContainer = document.getElementById("components-container");
@@ -16,11 +110,10 @@
       toggleComponent(title, true);
       }
       
-        // updatePreview();
+        
     });
   });
 
-  //function for handling image input
 
   function handleImageInput(title) {
     const inputBox = createImageInputBox(title);
@@ -43,27 +136,7 @@
 
   }
 
- 
-
-  function getImage() {
-    const imageInput = document.getElementById("imageInput");
-    const imagePreview = document.getElementById("imagePreview");
-
-    const file = imageInput.files[0];
-    if (file) {
-      const reader = new FileReader();
-
-      reader.addEventListener("load", function () {
-        const imageUrl = reader.result;
-        imagePreview.innerHTML = `<img src="${imageUrl}" alt="Uploaded Image" class="w-full h-auto rounded-md">`;
-        // imagePreview.classList.remove("hidden");
-      });
-
-      reader.readAsDataURL(file);
-    }
-  }
-
-
+  
   function toggleInputBox(title) {
     let placeHolder ="";
     if(title === "Heading") {
@@ -133,6 +206,51 @@
     }
   }
 
+
+}
+
+  var imageWidth = 0;
+  var imageHeight = 0;
+  
+  function getImage() {
+    const imageInput = document.getElementById("imageInput");
+  const imagePreview = document.getElementById("imagePreview");
+
+  const file = imageInput.files[0];
+  if (file) {
+    const reader = new FileReader();
+
+    reader.addEventListener("load", function () {
+      const imageUrl = reader.result;
+
+      // Create an image element to get the image dimensions
+      const img = new Image();
+
+      // Set up the onload event to handle the image loading
+      console.log("into image");
+      img.onload = function () {
+        // Extract image width and height
+        imageWidth = img.width;
+        imageHeight = img.height;
+
+        // Display the image preview
+        imagePreview.innerHTML = `<img src="${imageUrl}" alt="Uploaded Image" class="w-full h-auto rounded-md">`;
+
+        // Now you can use the imageWidth and imageHeight variables as needed
+        console.log("Image Width:", imageWidth);
+        console.log("Image Height:", imageHeight);
+      };
+
+      // Set the image source to the data URL of the file
+      img.src = imageUrl;
+    });
+
+    reader.readAsDataURL(file);
+  }
+  }
+
+
+
   function createImageInputBox(title) {
     const inputBox = document.createElement("div");
     inputBox.setAttribute("id", `input-box-${title}`);
@@ -189,29 +307,54 @@ function handleDragLeave(event) {
   event.target.classList.remove("bg-gray-100");
 }
 
+// JavaScript
 function handleDrop(event) {
-
-  
-    const imagePreview = document.getElementById("imagePreview");
-
-  
-
+  const imagePreview = document.getElementById("imagePreview");
   event.preventDefault();
   event.target.classList.remove("bg-gray-100");
-  
+
   const file = event.dataTransfer.files[0];
   if (file) {
     const reader = new FileReader();
     reader.addEventListener("load", function () {
       const imageUrl = reader.result;
-      imagePreview.innerHTML = `<img src="${imageUrl}" alt="Uploaded Image" class="w-full h-auto rounded-md">`;
-      // imagePreview.classList.remove("hidden");
+
+      // Create an image element to get the image dimensions
+      const img = new Image();
+
+      // Set up the onload event to handle the image loading
+      img.onload = function () {
+        // Extract image width and height
+        imageWidth = img.width;
+        imageHeight = img.height;
+
+        // Display the image preview
+        imagePreview.innerHTML = `<img src="${imageUrl}" alt="Uploaded Image" class="w-full h-auto rounded-md">`;
+
+        // Now you can use the imageWidth and imageHeight variables as needed
+        console.log("Image Width:", imageWidth);
+        console.log("Image Height:", imageHeight);
+      };
+
+      // Set the image source to the data URL of the file
+      img.src = imageUrl;
     });
+
     reader.readAsDataURL(file);
   } else {
     alert("Please drop an image file.");
   }
 }
+
+function allowDrop(event) {
+  event.preventDefault();
+  event.target.classList.add("bg-gray-100");
+}
+
+function resetDropArea(event) {
+  event.target.classList.remove("bg-gray-100");
+}
+
 
 
 function createInputBox(title, placeHolder) {
@@ -337,30 +480,92 @@ function createInputBox(title, placeHolder) {
     }
   }
 
- 
-  
-  function downloadAsImage() {
-    const downloadButton = document.querySelector('.mt-4');
 
-    downloadButton.style.display = 'none';
+
+
+
+
+function downloadAsImage() {
+  var previewContainer = document.getElementById('preview-container');
+var canvas = document.createElement('canvas');
+var ctx = canvas.getContext('2d');
+
+// Scroll the previewContainer so that it is fully visible
+function scrollPreviewContainer() {
+  previewContainer.scrollIntoView();
+  requestAnimationFrame(scrollPreviewContainer);
+}
+
+scrollPreviewContainer();
+
+// canvas.width = previewContainer.getBoundingClientRect().width;
+// canvas.height = previewContainer.getBoundingClientRect().height;
+canvas.width = imageWidth;
+canvas.height = imageHeight + 100;
+
+// Create a temporary div to clone the elements and capture the image
+var tempDiv = document.createElement('div');
+tempDiv.appendChild(previewContainer.cloneNode(true));
+
+var tempImg = new Image();
+var serializer = new XMLSerializer();
+var source = serializer.serializeToString(tempDiv);
+
+// Use the serialized SVG string as the source for the tempImg
+tempImg.src =
+  'data:image/svg+xml,' +
+  encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+          <foreignObject width="100%" height="100%">
+              <div xmlns="http://www.w3.org/1999/xhtml">${source}</div>
+          </foreignObject>
+      </svg>
+  `);
+
+// Wait for the tempImg to load
+tempImg.addEventListener('load', function () {
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Draw the tempImg onto the canvas
+  ctx.drawImage(tempImg, 0, 0);
+
+  // Create a link to download the image
+  var a = document.createElement('a');
+  a.href = canvas.toDataURL('image/png');
+  a.download = 'preview.png';
+  a.click();
+});
+
   
-    const previewContainer = document.getElementById("preview-container");
-  
-    domtoimage.toPng(previewContainer)
-      .then(function (dataUrl) {
-        
-        downloadButton.style.display = 'block';
-  
-        
-        const anchor = document.createElement("a");
-        anchor.download = "preview.png"; 
-        anchor.href = dataUrl; 
-        anchor.click(); 
-      })
-      .catch(function (error) {
-        console.error('Error during image conversion: ', error);
-      });
+      
   }
+
+
+
+  
+  // function downloadAsImage() {
+  //   const downloadButton = document.querySelector('.mt-4');
+
+  //   downloadButton.style.display = 'none';
+  
+  //   const previewContainer = document.getElementById("preview-container");
+  
+  //   domtoimage.toPng(previewContainer)
+  //     .then(function (dataUrl) {
+        
+  //       downloadButton.style.display = 'block';
+  
+        
+  //       const anchor = document.createElement("a");
+  //       anchor.download = "preview.png"; 
+  //       anchor.href = dataUrl; 
+  //       anchor.click(); 
+  //     })
+  //     .catch(function (error) {
+  //       console.error('Error during image conversion: ', error);
+  //     });
+  // }
 
   function getvalue() {
     
